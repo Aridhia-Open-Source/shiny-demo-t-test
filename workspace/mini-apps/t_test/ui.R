@@ -38,7 +38,7 @@ shinyUI(fluidPage(
                                  "Number of bins:",
                                  min = 1,
                                  max = 50,
-                                 value = 2
+                                 value = 20
                      ),
                      radioButtons("sample",
                                   "Please choose one sample t test or two sample t test:",
