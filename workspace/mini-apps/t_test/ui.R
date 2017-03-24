@@ -1,6 +1,8 @@
 
 library(shiny)
 
+source("double_hist.R")
+
 file_choices <- list.files("data")
 
 shinyUI(fluidPage(

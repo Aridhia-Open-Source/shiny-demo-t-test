@@ -99,12 +99,13 @@ shinyServer(function(input, output, session) {
     var2 <- variable2()
     if (is.null(var1)){return(NULL)}
     if (is.null(var2)){return(NULL)}
-    graph2 <- ifelse(input$sample == 'oneSamp', FALSE, TRUE)
-    p1 <- hist(var1, breaks = input$bins)
-    p2 <- hist(var2, breaks = input$bins)
-    plot(p1, col=rgb(0,0,1,1/4))
-    if(input$sample == 'twoSamp')
-      plot(p2, col=rgb(1,0,0,1/4),add = graph2)
+    if(input$sample == "twoSamp") {
+      return(double_hist(var1, var2, input$bins))
+    }
+    if(input$sample == "oneSamp") {
+      p1 <- hist(var1, breaks = input$bins)
+      return(plot(p1, col = rgb(0,0,1,1/4)))
+    }
   })
   
   # Output of discriptive summary of this variable
