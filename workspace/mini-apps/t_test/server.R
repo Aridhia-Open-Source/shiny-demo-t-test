@@ -20,24 +20,24 @@ shinyServer(function(input, output, session) {
   })
   
   
-  # Updata value user could select
+  # Update value user could select
   observe({
+    d <- data()
+    choices <- vapply(d, is.numeric, logical(1))
     updateSelectInput(
       session,
       "var1",
-      choices=names(data()))
-    
+      choices = names(d[choices]))
   })
-  # Updata value user could select
+  # Update value user could select
   observe({
+    d <- data()
+    choices <- vapply(d, function(x) is.character(x) || is.factor(x) || is.integer(x), logical(1))
     updateSelectInput(
       session,
       "var2",
-      choices=names(data()))
-    
+      choices = names(d)[choices])
   })
-  
-  
   
   # Output a data table for the upload tab page
   output$contents <- renderTable({
