@@ -100,7 +100,7 @@ shinyUI(fluidPage(
                                verbatimTextOutput('str'))),
                fluidRow(column(10, offset = 1,
                                h2("Data Table"),
-                               tableOutput('contents')))      
+                               DT::dataTableOutput('contents')))      
       ),           
       tabPanel('T-test',
                fluidRow(column(10, offset = 1,

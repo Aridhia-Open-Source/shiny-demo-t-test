@@ -40,7 +40,7 @@ shinyServer(function(input, output, session) {
   })
   
   # Output a data table for the upload tab page
-  output$contents <- renderTable({
+  output$contents <- DT::renderDataTable({
     data()
   })
   
