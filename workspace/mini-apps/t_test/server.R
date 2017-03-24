@@ -59,12 +59,16 @@ shinyServer(function(input, output, session) {
   
   output$group1_ui <- renderUI({
     if(is.null(cat_var())) return(NULL)
-    selectInput("group1", "Choose first group", choices = unique(cat_var()))
+    char_choices <- unique(as.character(cat_var()))
+    selectInput("group1", "Choose first group", choices = char_choices)
   })
   
   output$group2_ui <- renderUI({
     if(is.null(cat_var())) return(NULL)
-    selectInput("group2", "Choose second group", choices = unique(cat_var()))
+    char_choices <- unique(as.character(cat_var()))
+    l <- length(char_choices)
+    selectInput("group2", "Choose second group", choices = char_choices,
+                selected = char_choices[max(c(l, 2))])
   })
   
   cat1 <- reactive({
