@@ -77,7 +77,7 @@ shinyServer(function(input, output, session) {
   
   variable1 <- reactive({
     if (input$sample == "oneSamp") {
-      return(num_var)
+      return(num_var())
     }
     if (input$sample == "twoSamp") {
       var1 <- num_var()[cat_var() == cat1()]
@@ -130,14 +130,14 @@ shinyServer(function(input, output, session) {
     var2 <- variable2()
     conf <- input$conf
     if (is.null(var1)){return(NULL)}
-    t1 <- t.test(var1, alternative = input$tail, mu = input$test, conf.level = conf)
-    #var2 <- data()[,input$var2]
+    if(input$sample == "oneSamp") {
+      t1 <- t.test(var1, alternative = input$tail, mu = input$test, conf.level = conf)
+      return(t1)
+    }
     if (is.null(var2)){return(NULL)}
     ve <- ifelse(input$varequal == 'y', TRUE, FALSE)
     t2 <- t.test(var1, var2, alternative = input$tail, var.equal = ve, conf.level = conf)
-    if(input$sample == "oneSamp") {return(t1)}
-    if(input$sample == "twoSamp") {return(t2)}
-    
+    return(t2)
   })
   
   # Output of one sample t value of t-test
