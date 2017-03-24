@@ -41,12 +41,7 @@ shinyServer(function(input, output, session) {
   
   # Output a data table for the upload tab page
   output$contents <- renderTable({
-    inFile <- input$file1 
-    if (is.null(inFile))
-      return(NULL)
-    if (inFile == "") return(NULL)
-    read.csv(file.path("data", inFile), header=input$header, sep=input$sep, quote=input$quote)
-    
+    data()
   })
   
   num_var <- reactive({
