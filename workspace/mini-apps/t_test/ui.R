@@ -1,5 +1,5 @@
 
-library(shiny)
+xap.require("shiny", "DT")
 
 source("double_hist.R")
 

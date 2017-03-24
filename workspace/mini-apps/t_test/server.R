@@ -91,7 +91,6 @@ shinyServer(function(input, output, session) {
     return(out)
   })
   
-  
   # Output a histogram for the variables user chose
   output$graph <- renderPlot({
     var1 <- variable1()
@@ -120,8 +119,6 @@ shinyServer(function(input, output, session) {
     if (is.null(Data)){return(NULL)}
     str(Data)
   })
-  
-  
   
   # Create a one sample and two sample t-test reactive function
   ttestout <- reactive({
@@ -176,7 +173,5 @@ shinyServer(function(input, output, session) {
     if(input$sample == "oneSamp") {return(parametric1)}
     if(input$sample == "twoSamp") {return(rbind(parametric1,parametric2))}
   })
-  
-  
   
 })
