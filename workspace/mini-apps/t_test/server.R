@@ -11,14 +11,16 @@ shinyServer(function(input, output, session) {
   #})
   
   # reading file from data folder
-  data <- reactive({
-    inFile <- input$file1 
-    if (is.null(inFile)){return(NULL)}
-    if (inFile == ""){return(NULL)}
-    read.csv(file.path("data", inFile), header=input$header, sep=input$sep, 
-             quote=input$quote)
-  })
+  # data <- reactive({
+  #   inFile <- input$file1 
+  #   if (is.null(inFile)){return(NULL)}
+  #   if (inFile == ""){return(NULL)}
+  #   read.csv(file.path("data", inFile), header=input$header, sep=input$sep, 
+  #            quote=input$quote)
+  # })
   
+  choose_data <- callModule(xap.chooseDataTable, "choose_data")
+  data <- choose_data$data
   
   # Update value user could select
   observe({
