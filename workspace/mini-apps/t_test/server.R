@@ -13,6 +13,12 @@ shinyServer(function(input, output, session) {
     data()
   })
   
+  # selected numeric variable from the chosen dataset 
+  num_var <- callModule(chooseNumericColumn, "num_col", data, "Select a Numeric Variable")
+  # selected categorical variable from the chosen dataset
+  cat_var <- callModule(chooseColumn, "cat_col", data, label = "Select a Categorical Variable",
+                        predicate = function(x) (is.character(x) || is.factor(x)) && max(table(x)) > 1)
+  
   # selected categories from categorical variable
   cat1 <- callModule(chooseValue, "cat1", cat_var)
   cat2 <- callModule(chooseValue, "cat2", cat_var, selected = 2)
