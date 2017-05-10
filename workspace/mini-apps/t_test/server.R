@@ -3,20 +3,10 @@ library(shiny)
 
 shinyServer(function(input, output, session) {
   
-  # reading file from data folder
-  data <- reactive({
-    inFile <- input$file1 
-    if (is.null(inFile)){return(NULL)}
-    if (inFile == ""){return(NULL)}
-    read.csv(file.path("data", inFile), header=input$header, sep=input$sep, 
-             quote=input$quote)
-  })
   
-  # selected numeric variable from the chosen dataset 
-  num_var <- callModule(chooseNumericColumn, "num_col", data, "Select a Numeric Variable")
-  # selected categorical variable from the chosen dataset
-  cat_var <- callModule(chooseColumn, "cat_col", data, label = "Select a Categorical Variable",
-                        predicate = function(x) (is.character(x) || is.factor(x)) && max(table(x)) > 1)
+  choose_data <- callModule(xap.chooseDataTable, "choose_data")
+  data <- choose_data$data
+  
   
   # Output a data table for the upload tab page
   output$contents <- DT::renderDataTable({

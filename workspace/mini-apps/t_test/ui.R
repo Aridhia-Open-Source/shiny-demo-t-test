@@ -1,12 +1,24 @@
 
 xap.require("shiny", "DT", "ggplot2")
 
+# attempt to load xapModules
+l <- xap.require.or.install("xapModules")
+# if null then package was loaded from library
+if (!is.null(l)) {
+  # if FALSE then package was not found in repo 
+  if(!l) {
+    # attempt to install from packages binaries included with the app
+    pkg <- list.files("package_binaries", pattern = "xapModules*")
+    utils::install.packages(file.path("package_binaries", pkg), repos = NULL)
+  }
+}
+
 source("double_hist.R")
 source("chooseColumn.R")
 source("chooseValue.R")
 source("ggplotDensityCompare.R")
 
-file_choices <- list.files("data")
+#file_choices <- list.files("data")
 
 shinyUI(fluidPage(
   titlePanel("Example t-test App"),
@@ -22,7 +34,8 @@ shinyUI(fluidPage(
       #           accept=c('text/csv', 
       #                   'text/comma-separated-values,text/plain', 
       #                   '.csv')),
-      selectInput('file1', 'Choose Dataset', choices = c("Choose a Dataset" = "", file_choices)),
+      #selectInput('file1', 'Choose Dataset', choices = c("Choose a Dataset" = "", file_choices)),
+      xap.chooseDataTableUI("choose_data", label = "Choose a Dataset"),
       tags$hr(),
       checkboxInput('header', 'Header', TRUE),
       radioButtons(
