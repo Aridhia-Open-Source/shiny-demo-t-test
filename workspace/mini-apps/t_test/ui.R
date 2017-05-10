@@ -1,7 +1,10 @@
 
-xap.require("shiny", "DT")
+xap.require("shiny", "DT", "ggplot2")
 
 source("double_hist.R")
+source("chooseColumn.R")
+source("chooseValue.R")
+source("ggplotDensityCompare.R")
 
 file_choices <- list.files("data")
 
@@ -36,34 +39,25 @@ shinyUI(fluidPage(
     
     # SliderbarPanel for t-test tab
     conditionalPanel(condition = "$('li.active a').first().html()==='T-test'",
-      sliderInput("bins", "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 20
-      ),
+      h3("Variable Selection"),
       radioButtons("sample",
                    "Please choose one sample t test or two sample t test:",
                    choices = c("One sample" = "oneSamp", 
                                "Two sample" = "twoSamp")),
-      selectInput("var1", 
-                  label = "Please Select a Numerical Variable",
-                  ""
-      ),
+      chooseNumericColumnUI("num_col"),
       # Need to select a numeric variable, and for 2-sample t-test, select a categoric variable.
       # Within a categoric variable, select two fields that split a numeric variable into the 
       # two groups to be tested.
       conditionalPanel(condition = "input.sample == 'twoSamp'",
-        selectInput("var2", 
-                    label = "Please Select a Categorical Variable",
-                    ""
-        ),
-        uiOutput("group1_ui"),
-        uiOutput("group2_ui"),
-        radioButtons("varequal",
-                     "Do the two samples have equal variance:",
-                     choices = c("Yes" = "y", "No" = "n")
-        )
+        chooseColumnUI("cat_col"),
+        chooseValueUI("cat1"),
+        chooseValueUI("cat2")
       ),
+      hr(),
+      h3("Plot Controls"),
+      ggplotDensityCompareInput("plot"),
+      hr(),
+      h3("Test Controls"),
       selectInput("tail",
                   label = "Please Select a relationship you want to test:",
                   choices = c("Equal" = "two.sided", 
@@ -73,6 +67,12 @@ shinyUI(fluidPage(
       conditionalPanel(condition = "input.sample == 'oneSamp'",
         numericInput("test", "Mean value You Want to Test",
                      value = 0
+        )
+      ),
+      conditionalPanel(condition = "input.sample == 'twoSamp'",
+        radioButtons("varequal",
+                     "Do the two samples have equal variance:",
+                     choices = c("Yes" = "y", "No" = "n")
         )
       ),
       numericInput("conf",

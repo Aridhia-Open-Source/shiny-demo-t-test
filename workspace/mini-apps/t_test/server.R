@@ -2,13 +2,6 @@
 library(shiny)
 
 shinyServer(function(input, output, session) {
-  #Need to edit data to allow selection of platform dataset
-  #data <- reactive({
-  #  inFile <- input$file1 
-  #  if (is.null(inFile)){return(NULL)} 
-  #  read.csv(inFile$datapath, header=input$header, sep=input$sep, 
-  #           quote=input$quote)
-  #})
   
   # reading file from data folder
   data <- reactive({
@@ -19,60 +12,20 @@ shinyServer(function(input, output, session) {
              quote=input$quote)
   })
   
-  
-  # Update value user could select
-  observe({
-    d <- data()
-    choices <- vapply(d, is.numeric, logical(1))
-    updateSelectInput(
-      session,
-      "var1",
-      choices = names(d[choices]))
-  })
-  # Update value user could select
-  observe({
-    d <- data()
-    choices <- vapply(d, function(x) is.character(x) || is.factor(x) || is.integer(x), logical(1))
-    updateSelectInput(
-      session,
-      "var2",
-      choices = names(d)[choices])
-  })
+  # selected numeric variable from the chosen dataset 
+  num_var <- callModule(chooseNumericColumn, "num_col", data, "Select a Numeric Variable")
+  # selected categorical variable from the chosen dataset
+  cat_var <- callModule(chooseColumn, "cat_col", data, label = "Select a Categorical Variable",
+                        predicate = function(x) (is.character(x) || is.factor(x)) && max(table(x)) > 1)
   
   # Output a data table for the upload tab page
   output$contents <- DT::renderDataTable({
     data()
   })
   
-  num_var <- reactive({
-    data()[, input$var1]
-  })
-  
-  cat_var <- reactive({
-    data()[, input$var2]
-  })
-  
-  output$group1_ui <- renderUI({
-    if(is.null(cat_var())) return(NULL)
-    char_choices <- unique(as.character(cat_var()))
-    selectInput("group1", "Choose first group", choices = char_choices)
-  })
-  
-  output$group2_ui <- renderUI({
-    if(is.null(cat_var())) return(NULL)
-    char_choices <- unique(as.character(cat_var()))
-    l <- length(char_choices)
-    selectInput("group2", "Choose second group", choices = char_choices,
-                selected = char_choices[max(c(l, 2))])
-  })
-  
-  cat1 <- reactive({
-    input$group1
-  })
-  
-  cat2 <- reactive({
-    input$group2
-  })
+  # selected categories from categorical variable
+  cat1 <- callModule(chooseValue, "cat1", cat_var)
+  cat2 <- callModule(chooseValue, "cat2", cat_var, selected = 2)
   
   variable1 <- reactive({
     if (input$sample == "oneSamp") {
@@ -85,25 +38,25 @@ shinyServer(function(input, output, session) {
   })
   
   variable2 <- reactive({
-    var2 <- data()[,input$var2]
-    if (is.null(var2)){return(NULL)}
+    if (input$sample == "oneSamp") {
+      return(NULL)
+    }
     out <- num_var()[cat_var() == cat2()]
     return(out)
   })
   
+  plot_num <- reactive(c(variable1(), variable2()))
+  plot_cat <- reactive({
+    if(input$sample == "oneSamp") return("one_sample")
+    c(rep(cat1(), length(variable1())), rep(cat2(), length(variable2())))
+  })
+  
+  graph <- callModule(ggplotDensityCompare, "plot", plot_num, plot_cat)
+  
+  
   # Output a histogram for the variables user chose
   output$graph <- renderPlot({
-    var1 <- variable1()
-    var2 <- variable2()
-    if (is.null(var1)){return(NULL)}
-    if (is.null(var2)){return(NULL)}
-    if(input$sample == "twoSamp") {
-      return(double_hist(var1, var2, input$bins))
-    }
-    if(input$sample == "oneSamp") {
-      p1 <- hist(var1, breaks = input$bins)
-      return(plot(p1, col = rgb(0,0,1,1/4)))
-    }
+    graph() + theme_minimal()
   })
   
   # Output of discriptive summary of this variable
@@ -152,10 +105,8 @@ shinyServer(function(input, output, session) {
   
   # Output of key statistical parameters
   output$parametric <- renderTable({
-    var1 <- data()[,input$var1]
-    if (is.null(var)){return(NULL)}
-    var2 <- data()[,input$var2]
-    if (is.null(var)){return(NULL)}
+    var1 <- variable1()
+    var2 <- variable2()
     mean1 <- mean(var1)
     mean2 <- mean(var2)
     standard_deviation1 <- sd(var1)
@@ -171,7 +122,10 @@ shinyServer(function(input, output, session) {
                               standard_error=standard_error2)
     rownames(parametric2) <- input$var2
     if(input$sample == "oneSamp") {return(parametric1)}
-    if(input$sample == "twoSamp") {return(rbind(parametric1,parametric2))}
+    if(input$sample == "twoSamp") {
+      d <- rbind(parametric1,parametric2)
+      d <- cbind(group = c(cat1(), cat2()), d)
+      return(d)
+    }
   })
-  
 })
