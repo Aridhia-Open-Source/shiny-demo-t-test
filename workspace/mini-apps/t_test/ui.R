@@ -21,7 +21,7 @@ source("ggplotDensityCompare.R")
 #file_choices <- list.files("data")
 
 shinyUI(fluidPage(
-  titlePanel("Example t-test App"),
+  titlePanel("t-test App"),
   br(),
   br(),
   br(),
