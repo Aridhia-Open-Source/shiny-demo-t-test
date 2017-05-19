@@ -17,18 +17,19 @@ source("double_hist.R")
 source("chooseColumn.R")
 source("chooseValue.R")
 source("ggplotDensityCompare.R")
+source("documentation_ui.R")
 
 #file_choices <- list.files("data")
 
 shinyUI(fluidPage(
-  titlePanel("t-test App"),
+  titlePanel("t-test"),
   br(),
   br(),
   br(),
   
   sidebarPanel(
     
-    # SlidebarPanel for file upload tab. This needs to be changed to allow selection of platform datasets
+    
     conditionalPanel(condition = "$('li.active a').first().html()==='Data View'",
       # fileInput('file1', 'Choose Dataset',
       #           accept=c('text/csv', 
@@ -58,9 +59,7 @@ shinyUI(fluidPage(
                    choices = c("One sample" = "oneSamp", 
                                "Two sample" = "twoSamp")),
       chooseNumericColumnUI("num_col"),
-      # Need to select a numeric variable, and for 2-sample t-test, select a categoric variable.
-      # Within a categoric variable, select two fields that split a numeric variable into the 
-      # two groups to be tested.
+      
       conditionalPanel(condition = "input.sample == 'twoSamp'",
         chooseColumnUI("cat_col"),
         chooseValueUI("cat1"),
@@ -98,7 +97,7 @@ shinyUI(fluidPage(
     )
   ),
   mainPanel(
-    tabsetPanel(
+    tabsetPanel(documentation_tab(),
       tabPanel('Data View', 
         fluidRow(
           column(10, offset = 1,
@@ -132,11 +131,17 @@ shinyUI(fluidPage(
             p("The observed sample statistics were:"),
             tableOutput('parametric'),
             h2("Hypothesis of the t-test"),
-            p("We are testing the null hypothesis that the mean of population equals to the value you set"),
+            p("We are testing the null hypothesis that the mean of population equals to the value you set, or in the two-sample
+              case that the mean of both populations is the same."),
             p("The observed t test statistic :"),
-            textOutput('tvalue'),
-            p("A low P value suggests that your sample provides enough evidence that you can reject the null hypothesis for the entire population."),
-            textOutput('pvalue')
+            p("t=",textOutput('tvalue', inline = TRUE)),
+            p("The P value from the test is compared to your selected threshold, which is (1 - confidence level)."),
+            p("If your P value is below the threshold, the null hypothesis rejected."),
+            h3("P=", textOutput('pvalue', inline = TRUE)),
+            h4(textOutput("sigtext"))
+            
+            
+            
           )
         )
       )
