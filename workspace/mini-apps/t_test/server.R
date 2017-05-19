@@ -86,18 +86,33 @@ shinyServer(function(input, output, session) {
   })
   
   # Output of one sample t value of t-test
-  output$tvalue <- renderPrint({
+  output$tvalue <- renderText({
     vals <- ttestout()
     if (is.null(vals)){return(NULL)}
     vals$statistic
   })
   
   # Output of p value
-  output$pvalue <- renderPrint({
-    vals <- ttestout()
-    if (is.null(vals)){return(NULL)}
-    vals$p.value 
+  output$pvalue <- renderText({
+    pvals <- ttestout()
+    if (is.null(pvals)){return(NULL)}
+    pvals$p.value 
   })
+  
+  # Output of P Value threshold
+  output$thres <- reactive({
+  (1-(input$conf))
+  })
+  
+  
+  #Output of significance/non-significance threshold reached
+  
+   output$sigtext <- renderText({
+   vals <- ttestout()
+   values <- (vals$p.value - (1-(input$conf)))
+   if (values <= 0) {return ("P value below threshold. Null hypothesis rejected.")}
+   else {("P value above threshold. Null hypothesis retained")}
+   })
   
   # Output of key statistical parameters
   output$parametric <- renderTable({
