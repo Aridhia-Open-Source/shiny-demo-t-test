@@ -3,32 +3,34 @@ documentation_tab <- function() {
            # load MathJax library so LaTeX can be used for math equations
            withMathJax(), 
            h3("Using the t-test to compare group means"), # paragraph and bold text
-           p("This app allows you to visually compare ."),
+           p("This app allows you to view the distribution of a numeric variable from a workspace dataset,
+              and then split that variable into two groups of any categoric variable in that dataset. These two groups can then be visually compared."),
+           p("In addition, a t-test can be performed, either between two groups (two-sample) or between one group and a stated mean (one-sample)."),
            br(),
-           p("The layout of the app contains one", strong("sidebar,"), "and two", strong("tabs"), 
-             "the first of which (Information) you are reading, and the second (Application) containing the application output
-              with the regression plot and statistical results."),
+           p("The layout of the app contains one", strong("sidebar,"), "and three", strong("tabs,"), 
+             " the first of which (Information) you are reading, the second (Data View) summarising the dataset selected and the third (T-test)
+              displaying the interactive histogram and statistical results."),
 
            
            # break used to space sections
            br(),
            h4("To use the app:"),
-           p("To experiment with linear regressions on your workspace datasets, in the ",
-             strong("sidebar"), 
-             " you may: "), 
+           p("To experiment with t-tests on your workspace datasets, first select the ", strong("Data View"), " tab to view the dataset ",
+             strong("sidebar."), " From here you can select your dataset of interest from the ", em("drop down box,"), " and view 
+             a summary of your dataset." ),
+           p("Once happy with your dataset choice, select the ", strong("T-test"), "tab, and view the sidebar:"),
            br(), # ordered list
            tags$ol(
-             tags$li("In the first ", em("drop down box, "), 
-                     "select the database to be used. The ", em("Refresh table list"), "button updates the tables you can select if 
-                      any workspace datasets are changed."), 
-             tags$li("In the second ", em("drop down box, "), 
-                     "pick the resulting variable of the regression."), 
-             tags$li("In the third ", em("drop down box, "), 
-                     "choose one of the regressors for the linear regression."), 
-             tags$li("In the following", em("drop down box "),
-                     "you are able to define which one, of the several predefined linear models, will be used."),
-             tags$li("Finally, in the ", em("check boxes "),
-                     "you can define characteristics of the resulting plot.")
+             tags$li("If ", em("One sample", " is selected,"), 
+                     "choose your numeric variable from the ", em("drop down box."), "Scroll down to ", em("Mean value you want to test,"),
+                      "and input your mean value."), 
+             tags$li("If ", em("Two sample", " is selected,"), 
+                     "choose your numeric variable from the ", em("drop down box,"), "your categorical variable, and the two groups you want 
+                     to compare."),
+             tags$li("You can change the graph output under ", em("Plot Controls "), 
+                     "in the sidebar, and change the parameters of the t-test under", em("Test Controls.")), 
+             tags$li("The graph output, summary statistics and t-test hypothesis are shown on the main panel.")
+             
             
              ),
            br(),
