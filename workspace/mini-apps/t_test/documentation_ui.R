@@ -4,7 +4,7 @@ documentation_tab <- function() {
            withMathJax(), 
            h3("Using the t-test to compare group means"), # paragraph and bold text
            p("This app allows you to view the distribution of a numeric variable from a workspace dataset,
-              and then split that variable into two groups of any categoric variable in that dataset. These two groups can then be visually compared."),
+              and then split that variable into two groups by any categoric variable in that dataset. These two groups can then be graphically compared."),
            p("In addition, a t-test can be performed, either between two groups (two-sample) or between one group and a stated mean (one-sample)."),
            br(),
            p("The layout of the app contains one", strong("sidebar,"), "and three", strong("tabs,"), 
