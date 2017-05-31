@@ -21,7 +21,7 @@ source("documentation_ui.R")
 
 #file_choices <- list.files("data")
 
-shinyUI(fluidPage(
+shinyUI(fluidPage(theme = "xapstyles.css",
   titlePanel("t-test"),
   br(),
   br(),
