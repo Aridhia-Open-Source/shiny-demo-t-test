@@ -95,7 +95,7 @@ shinyUI(fluidPage(theme = "xapstyles.css",
     
   ),
   mainPanel(
-    tabsetPanel(documentation_tab(),
+    tabsetPanel(
       tabPanel('Data View', 
         fluidRow(
           column(10, offset = 1,
@@ -142,8 +142,10 @@ shinyUI(fluidPage(theme = "xapstyles.css",
             
           )
         )
-      )
+      ),
+      documentation_tab()
     )
-  ),
-  HTML('<iframe width="100%" height="500" src="//www.youtube.com/embed/GLrhtZCfHfk" frameborder="0"></iframe>')
+    
+  )
+  
 )))
