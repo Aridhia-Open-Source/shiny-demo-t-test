@@ -31,11 +31,7 @@ shinyUI(fluidPage(theme = "xapstyles.css",
     
     
     conditionalPanel(condition = "$('li.active a').first().html()==='Data View'",
-      # fileInput('file1', 'Choose Dataset',
-      #           accept=c('text/csv', 
-      #                   'text/comma-separated-values,text/plain', 
-      #                   '.csv')),
-      #selectInput('file1', 'Choose Dataset', choices = c("Choose a Dataset" = "", file_choices)),
+     
       xap.chooseDataTableUI("choose_data", label = "Choose a Dataset"),
       tags$hr(),
       checkboxInput('header', 'Header', TRUE),
@@ -95,6 +91,7 @@ shinyUI(fluidPage(theme = "xapstyles.css",
       ),
       helpText("Note: Please assign a number between 0.8 and 0.99")
     )
+    
   ),
   mainPanel(
     tabsetPanel(documentation_tab(),
