@@ -22,6 +22,7 @@ source("documentation_ui.R")
 #file_choices <- list.files("data")
 
 shinyUI(fluidPage(theme = "xapstyles.css",
+  bootstrapPage(
   titlePanel("t-test"),
   br(),
   br(),
@@ -143,5 +144,6 @@ shinyUI(fluidPage(theme = "xapstyles.css",
         )
       )
     )
-  )
-))
+  ),
+  HTML('<iframe width="100%" height="500" src="//www.youtube.com/embed/GLrhtZCfHfk" frameborder="0"></iframe>')
+)))
