@@ -21,131 +21,134 @@ source("documentation_ui.R")
 
 #file_choices <- list.files("data")
 
-shinyUI(fluidPage(theme = "xapstyles.css",
-  bootstrapPage(
-  titlePanel("t-test"),
-  br(),
-  br(),
-  br(),
+shinyUI(bootstrapPage(theme = "xapstyles.css",
+                      tags$head(tags$style(
+                        HTML("
+                             .shiny-output-error { visibility: hidden; }
+                             ")
+                        )),
   
-  sidebarPanel(
-    
-    
-    conditionalPanel(condition = "$('li.active a').first().html()==='Data View'",
-     
-      xap.chooseDataTableUI("choose_data", label = "Choose a Dataset"),
-      tags$hr(),
-      checkboxInput('header', 'Header', TRUE),
-      radioButtons(
-        'sep', 'Separator',
-        c(Comma = ',', Semicolon=';', Tab='\t'),
-        selected = ','
-      ),
-      radioButtons(
-        'quote', 'Quote',
-        c(None = '', 'Double Quote' = '"', 'Single Quote' = "'"),
-        selected = '"'
-      )
-    ),
-    
-    # SliderbarPanel for t-test tab
-    conditionalPanel(condition = "$('li.active a').first().html()==='T-test'",
-      h3("Variable Selection"),
-      radioButtons("sample",
-                   "Please choose one sample t test or two sample t test:",
-                   choices = c("One sample" = "oneSamp", 
-                               "Two sample" = "twoSamp")),
-      chooseNumericColumnUI("num_col"),
-      
-      conditionalPanel(condition = "input.sample == 'twoSamp'",
-        chooseColumnUI("cat_col"),
-        chooseValueUI("cat1"),
-        chooseValueUI("cat2")
-      ),
-      hr(),
-      h3("Plot Controls"),
-      ggplotDensityCompareInput("plot"),
-      hr(),
-      h3("Test Controls"),
-      selectInput("tail",
-                  label = "Please Select a relationship you want to test:",
-                  choices = c("Equal" = "two.sided", 
-                              "Less" = "less",
-                              "Greater" = "greater")
-      ),
-      conditionalPanel(condition = "input.sample == 'oneSamp'",
-        numericInput("test", "Mean value You Want to Test",
-                     value = 0
-        )
-      ),
-      conditionalPanel(condition = "input.sample == 'twoSamp'",
-        radioButtons("varequal",
-                     "Do the two samples have equal variance:",
-                     choices = c("Yes" = "y", "No" = "n")
-        )
-      ),
-      numericInput("conf",
-                   label = "Please Select a confidence level:",
-                   value = 0.95,
-                   min = 0.8,
-                   max = 0.99
-      ),
-      helpText("Note: Please assign a number between 0.8 and 0.99")
-    )
-    
-  ),
-  mainPanel(
+  headerPanel("t-test"),
+  mainPanel(width = 12,
     tabsetPanel(
-      tabPanel('Data View', 
-        fluidRow(
-          column(10, offset = 1,
-            h2("Data Summary"),
-            verbatimTextOutput('disc')
-          )
-        ),
+      tabPanel('Data View',
+               conditionalPanel(condition = "$('li.active a').first().html()==='Data View'",
+                sidebarLayout(
+                  sidebarPanel(
+                    xap.chooseDataTableUI("choose_data", label = "Choose a Dataset"),
+                    tags$hr(),
+                    checkboxInput('header', 'Header', TRUE),
+                    radioButtons(
+                      'sep', 'Separator',
+                      c(Comma = ',', Semicolon=';', Tab='\t'),
+                      selected = ','
+                    ),
+                    radioButtons(
+                      'quote', 'Quote',
+                      c(None = '', 'Double Quote' = '"', 'Single Quote' = "'"),
+                      selected = '"'
+                    )
+                    
+                  
+                ),
+                 
                
-        fluidRow(
-          column(10, offset = 1,
-            h2("Data Structure"),
-            verbatimTextOutput('str')
-          )
-        ),
-        fluidRow(
-          column(10, offset = 1,
-            h2("Data Table"),
-            DT::dataTableOutput('contents')
-          )
-        )      
-      ),           
+               mainPanel(
+               
+                 column(12,
+                        h2("Data Summary"),
+                        verbatimTextOutput('disc'),
+                 
+              
+               
+                
+                        h2("Data Structure"),
+                        verbatimTextOutput('str'),
+                
+                        h2("Data Table"),
+                        DT::dataTableOutput('contents')
+                 )
+               )      
+      ))),           
       tabPanel('T-test',
-        fluidRow(
-          column(10, offset = 1,
-            plotOutput('graph')
-          )
-        ),
-        fluidRow(
-          column(8, offset = 1,
-            h2("Key summary statistics"),
-            p("The observed sample statistics were:"),
-            tableOutput('parametric'),
-            h2("Hypothesis of the t-test"),
-            p("We are testing the null hypothesis that the mean of population equals to the value you set, or in the two-sample
-              case that the mean of both populations is the same."),
-            p("The observed t test statistic :"),
-            p("t=",textOutput('tvalue', inline = TRUE)),
-            p("The P value from the test is compared to your selected threshold, which is (1 - confidence level)."),
-            p("If your P value is below the threshold, the null hypothesis rejected."),
-            h3("P=", textOutput('pvalue', inline = TRUE)),
-            h4(textOutput("sigtext"))
-            
-            
-            
-          )
-        )
-      ),
+               conditionalPanel(
+                 condition = "$('li.active a').first().html()==='T-test'",
+                 sidebarLayout(
+                   sidebarPanel(
+                     h3("Variable Selection"),
+                     radioButtons("sample",
+                                  "Please choose one sample t test or two sample t test:",
+                                  choices = c("One sample" = "oneSamp", 
+                                              "Two sample" = "twoSamp")),
+                     chooseNumericColumnUI("num_col"),
+                     
+                     conditionalPanel(condition = "input.sample == 'twoSamp'",
+                                      chooseColumnUI("cat_col"),
+                                      chooseValueUI("cat1"),
+                                      chooseValueUI("cat2")
+                     ),
+                     hr(),
+                     h3("Plot Controls"),
+                     ggplotDensityCompareInput("plot"),
+                     hr(),
+                     h3("Test Controls"),
+                     selectInput("tail",
+                                 label = "Please Select a relationship you want to test:",
+                                 choices = c("Equal" = "two.sided", 
+                                             "Less" = "less",
+                                             "Greater" = "greater")
+                     ),
+                     conditionalPanel(condition = "input.sample == 'oneSamp'",
+                                      numericInput("test", "Mean value You Want to Test",
+                                                   value = 0
+                                      )
+                     ),
+                     conditionalPanel(condition = "input.sample == 'twoSamp'",
+                                      radioButtons("varequal",
+                                                   "Do the two samples have equal variance:",
+                                                   choices = c("Yes" = "y", "No" = "n")
+                                      )
+                     ),
+                     numericInput("conf",
+                                  label = "Please Select a confidence level:",
+                                  value = 0.95,
+                                  min = 0.8,
+                                  max = 0.99
+                     ),
+                     helpText("Note: Please assign a number between 0.8 and 0.99")
+                   
+                     
+                   ),
+                 
+               
+               mainPanel(
+                 column(12,
+                        plotOutput('graph'),
+             
+                        h2("Key summary statistics"),
+                        p("The observed sample statistics were:"),
+                        tableOutput('parametric'),
+                        h2("Hypothesis of the t-test"),
+                        p("We are testing the null hypothesis that the mean of population equals to the value you set, or in the two-sample
+                          case that the mean of both populations is the same."),
+                        p("The observed t test statistic :"),
+                        p("t=",textOutput('tvalue', inline = TRUE)),
+                        p("The P value from the test is compared to your selected threshold, which is (1 - confidence level)."),
+                        p("If your P value is below the threshold, the null hypothesis rejected."),
+                        h3("P=", textOutput('pvalue', inline = TRUE)),
+                        h4(textOutput("sigtext"))
+                        
+                        
+                        
+                        ))
+               ))),
+
       documentation_tab()
     )
     
+  
+    
   )
   
-)))
+  
+))
