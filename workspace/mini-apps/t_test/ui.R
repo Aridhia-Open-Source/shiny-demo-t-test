@@ -21,7 +21,8 @@ source("documentation_ui.R")
 
 #file_choices <- list.files("data")
 
-shinyUI(bootstrapPage(theme = "xapstyles.css",
+shinyUI(fluidPage(
+  bootstrapPage(theme = "xapstyles.css",
                       tags$head(tags$style(
                         HTML("
                              .shiny-output-error { visibility: hidden; }
@@ -32,6 +33,7 @@ shinyUI(bootstrapPage(theme = "xapstyles.css",
   mainPanel(width = 12,
     tabsetPanel(
       tabPanel('Data View',
+               fluidPage(
                conditionalPanel(condition = "$('li.active a').first().html()==='Data View'",
                 sidebarLayout(
                   sidebarPanel(
@@ -69,8 +71,9 @@ shinyUI(bootstrapPage(theme = "xapstyles.css",
                         DT::dataTableOutput('contents')
                  )
                )      
-      ))),           
+      )))),           
       tabPanel('T-test',
+               fluidPage(
                conditionalPanel(
                  condition = "$('li.active a').first().html()==='T-test'",
                  sidebarLayout(
@@ -141,7 +144,7 @@ shinyUI(bootstrapPage(theme = "xapstyles.css",
                         
                         
                         ))
-               ))),
+               )))),
 
       documentation_tab()
     )
@@ -149,6 +152,6 @@ shinyUI(bootstrapPage(theme = "xapstyles.css",
   
     
   )
-  
+  )
   
 ))

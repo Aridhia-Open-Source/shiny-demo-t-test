@@ -1,5 +1,6 @@
 documentation_tab <- function() {
   tabPanel("Help",
+           fluidPage(
            
            h3("Using the t-test to compare group means"), # paragraph and bold text
            p("This app allows you to view the distribution of a numeric variable from a workspace dataset,
@@ -41,5 +42,5 @@ documentation_tab <- function() {
                     comfortable with the calculations made before proceeding. ")
            )
            
-           )
+           ))
 }
