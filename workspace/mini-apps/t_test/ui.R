@@ -57,7 +57,7 @@ shinyUI(fluidPage(
                
                mainPanel(
                
-                 column(12,
+                 
                         h2("Data Summary"),
                         verbatimTextOutput('disc'),
                  
@@ -71,7 +71,7 @@ shinyUI(fluidPage(
                         DT::dataTableOutput('contents')
                  )
                )      
-      )))),           
+      ))),           
       tabPanel('T-test',
                fluidPage(
                conditionalPanel(
@@ -125,7 +125,7 @@ shinyUI(fluidPage(
                  
                
                mainPanel(
-                 column(12,
+                 
                         plotOutput('graph'),
              
                         h2("Key summary statistics"),
@@ -144,7 +144,7 @@ shinyUI(fluidPage(
                         
                         
                         ))
-               )))),
+               ))),
 
       documentation_tab()
     )
