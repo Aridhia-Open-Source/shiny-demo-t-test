@@ -39,7 +39,7 @@ documentation_tab <- function() {
             column(
               6,
               h3("Walkthrough Video"),
-              HTML('<iframe width="100%" height="300" src="//www.youtube.com/embed/GLrhtZCfHfk?rel=0" frameborder="0"></iframe>'),
+              HTML('<iframe width="100%" height="300" src="//www.youtube.com/embed/W5EmENa0tZU?rel=0" frameborder="0"></iframe>'),
               br(),
               p(strong("NB: This mini-app is for provided for demonstration purposes, is unsupported and is utilised at user's 
                        risk. If you plan to use this mini-app to inform your study, please review the code and ensure you are 

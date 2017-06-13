@@ -56,21 +56,31 @@ shinyUI(fluidPage(
                  
                
                mainPanel(
-               
                  
-                        h2("Data Summary"),
-                        verbatimTextOutput('disc'),
-                 
-              
+                   conditionalPanel(
                
-                
-                        h2("Data Structure"),
-                        verbatimTextOutput('str'),
-                
-                        h2("Data Table"),
-                        DT::dataTableOutput('contents')
+                    condition = "input['choose_data-table_name'] == ''",
+                        h2("Please Select a Dataset")
+                        
+                    
+                 ),
+                   conditionalPanel(
+                   
+                   condition = "input['choose_data-table_name'] != ''",
+                   h2("Data Summary"),
+                   verbatimTextOutput('disc'),
+                   
+                   
+                   
+                   
+                   
+                   h2("Data Structure"),
+                   verbatimTextOutput('str'),
+                   
+                   h2("Data Table"),
+                   DT::dataTableOutput('contents')
                  )
-               )      
+               ))      
       ))),           
       tabPanel('T-test',
                fluidPage(
