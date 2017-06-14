@@ -37,17 +37,17 @@ shinyUI(fluidPage(
                conditionalPanel(condition = "$('li.active a').first().html()==='Data View'",
                 sidebarLayout(
                   sidebarPanel(
-                    xap.chooseDataTableUI("choose_data", label = "Choose a Dataset"),
+                    xap.chooseDataTableUI("choose_data", label = "Choose a dataset"),
                     tags$hr(),
-                    checkboxInput('header', 'Header', TRUE),
+                    checkboxInput('header', 'header', TRUE),
                     radioButtons(
                       'sep', 'Separator',
-                      c(Comma = ',', Semicolon=';', Tab='\t'),
+                      c(comma = ',', semicolon=';', tab='\t'),
                       selected = ','
                     ),
                     radioButtons(
                       'quote', 'Quote',
-                      c(None = '', 'Double Quote' = '"', 'Single Quote' = "'"),
+                      c(none = '', 'double quote' = '"', 'single quote' = "'"),
                       selected = '"'
                     )
                     
@@ -60,7 +60,7 @@ shinyUI(fluidPage(
                    conditionalPanel(
                
                     condition = "input['choose_data-table_name'] == ''",
-                        h2("Please Select a Dataset")
+                        h2("Please select a dataset")
                         
                     
                  ),
@@ -82,15 +82,16 @@ shinyUI(fluidPage(
                  )
                ))      
       ))),           
-      tabPanel('T-test',
+      
+          tabPanel('t-test',
                fluidPage(
                conditionalPanel(
-                 condition = "$('li.active a').first().html()==='T-test'",
+                 condition = "$('li.active a').first().html()==='t-test'",
                  sidebarLayout(
                    sidebarPanel(
                      h3("Variable Selection"),
                      radioButtons("sample",
-                                  "Please choose one sample t test or two sample t test:",
+                                  "Please choose one sample t-test or two sample t-test:",
                                   choices = c("One sample" = "oneSamp", 
                                               "Two sample" = "twoSamp")),
                      chooseNumericColumnUI("num_col"),
@@ -112,7 +113,7 @@ shinyUI(fluidPage(
                                              "Greater" = "greater")
                      ),
                      conditionalPanel(condition = "input.sample == 'oneSamp'",
-                                      numericInput("test", "Mean value You Want to Test",
+                                      numericInput("test", "Mean value you want to test",
                                                    value = 0
                                       )
                      ),
@@ -123,7 +124,7 @@ shinyUI(fluidPage(
                                       )
                      ),
                      numericInput("conf",
-                                  label = "Please Select a confidence level:",
+                                  label = "Please select a confidence level:",
                                   value = 0.95,
                                   min = 0.8,
                                   max = 0.99
@@ -144,10 +145,10 @@ shinyUI(fluidPage(
                         h2("Hypothesis of the t-test"),
                         p("We are testing the null hypothesis that the mean of population equals to the value you set, or in the two-sample
                           case that the mean of both populations is the same."),
-                        p("The observed t test statistic :"),
+                        p("The observed t-test statistic :"),
                         p("t=",textOutput('tvalue', inline = TRUE)),
                         p("The P value from the test is compared to your selected threshold, which is (1 - confidence level)."),
-                        p("If your P value is below the threshold, the null hypothesis rejected."),
+                        p("If your P value is below the threshold, the null hypothesis is rejected."),
                         h3("P=", textOutput('pvalue', inline = TRUE)),
                         h4(textOutput("sigtext"))
                         
