@@ -1,11 +1,10 @@
-
 chooseValueUI <- function(id) {
   ns <- NS(id)
   
   uiOutput(ns("choose_value_ui"))
 }
 
-chooseValue <- function(input, output, session, values, label = "Select a Value", selected = 1) {
+chooseValue <- function(input, output, session, values, label = "Select a value", selected = 1) {
   ns <- session$ns
   
   u_values <- reactive({

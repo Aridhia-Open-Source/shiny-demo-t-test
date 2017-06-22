@@ -1,4 +1,3 @@
-
 double_hist <- function(v1, v2, bins = 20) {
   p1 <- hist(v1, breaks = bins)
   p2 <- hist(v2, breaks = bins)

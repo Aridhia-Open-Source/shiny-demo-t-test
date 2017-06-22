@@ -1,4 +1,3 @@
-
 library(shiny)
 
 shinyServer(function(input, output, session) {
@@ -14,9 +13,9 @@ shinyServer(function(input, output, session) {
   })
   
   # selected numeric variable from the chosen dataset 
-  num_var <- callModule(chooseNumericColumn, "num_col", data, "Select a Numeric Variable")
+  num_var <- callModule(chooseNumericColumn, "num_col", data, "Select a numeric variable")
   # selected categorical variable from the chosen dataset
-  cat_var <- callModule(chooseColumn, "cat_col", data, label = "Select a Categorical Variable",
+  cat_var <- callModule(chooseColumn, "cat_col", data, label = "Select a categorical variable",
                         predicate = function(x) (is.character(x) || is.factor(x)) && max(table(x)) > 1)
   
   # selected categories from categorical variable
@@ -101,18 +100,18 @@ shinyServer(function(input, output, session) {
   
   # Output of P Value threshold
   output$thres <- reactive({
-  (1-(input$conf))
+    (1-(input$conf))
   })
   
   
   #Output of significance/non-significance threshold reached
   
-   output$sigtext <- renderText({
-   vals <- ttestout()
-   values <- (vals$p.value - (1-(input$conf)))
-   if (values <= 0) {return ("P value below threshold. Null hypothesis rejected.")}
-   else {("P value above threshold. Null hypothesis retained")}
-   })
+  output$sigtext <- renderText({
+    vals <- ttestout()
+    values <- (vals$p.value - (1-(input$conf)))
+    if (values <= 0) {return ("P value below threshold. Null hypothesis rejected.")}
+    else {("P value above threshold. Null hypothesis retained")}
+  })
   
   # Output of key statistical parameters
   output$parametric <- renderTable({
