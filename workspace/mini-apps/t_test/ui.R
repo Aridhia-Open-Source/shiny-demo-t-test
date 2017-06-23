@@ -33,7 +33,7 @@ shinyUI(fluidPage(
                           tabsetPanel(
                             tabPanel('Data view',
                                      fluidPage(
-                                       conditionalPanel(condition = "$('li.active a').first().html()==='Data view'",
+                                       
                                                         sidebarLayout(
                                                           sidebarPanel(
                                                             xap.chooseDataTableUI("choose_data", label = "choose a dataset"),
@@ -79,13 +79,12 @@ shinyUI(fluidPage(
                                                               
                                                               #h2("Data table"),
                                                               #DT::dataTableOutput('contents')
-                                                            )
+                                                            
                                                           ))      
                                        ))),           
                             tabPanel('T-Test',
                                      fluidPage(
-                                       conditionalPanel(
-                                         condition = "$('li.active a').first().html()==='T-Test'",
+                                       
                                          sidebarLayout(
                                            sidebarPanel(
                                              h3("Variable selection"),
@@ -153,7 +152,7 @@ shinyUI(fluidPage(
                                              
                                              
                                              
-                                             ))
+                                             )
                                        ))),
                             
                             documentation_tab()
