@@ -74,10 +74,11 @@ shinyUI(fluidPage(
                                                               
                                                               
                                                               h2("Data structure"),
-                                                              verbatimTextOutput('str'),
+                                                              verbatimTextOutput('str') 
+                                                              #,
                                                               
-                                                              h2("Data table"),
-                                                              DT::dataTableOutput('contents')
+                                                              #h2("Data table"),
+                                                              #DT::dataTableOutput('contents')
                                                             )
                                                           ))      
                                        ))),           
