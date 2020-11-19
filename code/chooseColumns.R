@@ -16,7 +16,7 @@ chooseColumn <- function(input, output, session, data, predicate, label = "Selec
   })
   
   values <- reactive({
-    data[[input$]]
+    data()[[input$choose_column]]
   })
   
   return(values)

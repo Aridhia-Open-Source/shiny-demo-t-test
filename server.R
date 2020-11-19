@@ -1,11 +1,8 @@
-library(shiny)
 
 shinyServer(function(input, output, session) {
   
-  
   choose_data <- callModule(xap.chooseDataTable, "choose_data")
   data <- choose_data$data
-  
   
   # Output a data table for the upload tab page
   output$contents <- DT::renderDataTable({
