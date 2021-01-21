@@ -5,7 +5,7 @@ If we are comparing the mean of two different groups, this is called a **two-sam
 We can also use a t-test to compare the mean of a group against a known value, this is a **one-sample t-test**.
 
 
-## About the Chi-squared test app
+## About the T-test test app
 
 Has three tabs:
 1. Data View, where you can select the data and see a summary of it
