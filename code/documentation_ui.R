@@ -3,24 +3,17 @@ documentation_tab <- function() {
            fluidPage(width = 12,
                      fluidRow(column(
                        6,
-                       h3("Using the t-test to compare group means"), 
-                       p("This mini-app allows you to view the distribution of a numeric variable from a workspace dataset,
+                       h3("T-Test"), 
+                       p("This RShiny mini-app allows you to view the distribution of a numeric variable in a given dataset,
                 and split that variable into two groups by any categoric variable in that dataset. These two groups can then be graphically compared. 
                 In addition, a t-test can be performed, either between two groups (two-sample) or between one group and a stated mean (one-sample)."),
-                       h4("Mini-app layout"),
-                       p("The mini-app contains three tabs; this help tab gives you an overview of the mini-app itself. The data view tab summarises 
-                the dataset selected, while the T-test tab displays the interactive histogram and statistical results."),
-                       
-                       h4("To use the mini-app"),
-                       p("To run your experiment first select the Data View tab, and your dataset of interest from the drop-down menu in the 
-                left-hand sidebar. Once selected, you will be shown a summary of your dataset. " ),
-                       
-                       
+                       h4("How to use the mini-app"),
+                       p("To run your experiment: "),
                        tags$ol(
-                         tags$li("Now ", strong("select the T-test tab.")), 
-                         
-                         tags$li("If you choose to select ", strong("one sample,"), 
-                                 "choose your numeric variable from the drop-down menu, scroll down to ", strong("mean value you want to test"),
+                         tags$li("First, select a dataset on the 'Data View' tab. Once selected a summary of your dataset will appear on the main panel."),
+                         tags$li("Now ", strong("move to the T-Test tab."), " You can choose whether to perform a one or two sample test."),
+                         tags$li("If you choose a ", strong("one sample test,"), 
+                                 " choose your numeric variable from the drop-down menu, scroll down to ", strong("mean value you want to test"),
                                  "and ", strong("input your mean value.")),
                          tags$li("If you select ", strong("two sample"), 
                                  "choose your ", strong("numeric variable "), "from the drop-down menu, then your ", strong("categorical variable,"),
@@ -30,6 +23,7 @@ documentation_tab <- function() {
                        ),
                        p("You can experiment with any number of combinations, with the resulting graphical output, summary statistics and t-test
                 hypothesis shown on the main panel."),
+                       p("The examplar datasets used in this demo can be found in the 'data' folder, you can save your CSV there to use them in the app."),
                        br()
                      ),
                      column(
