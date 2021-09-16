@@ -7,7 +7,7 @@ shinyUI(fluidPage(
                        ")
                   )),
                 
-                headerPanel("T-Test"),
+                headerPanel("t-Test"),
                 mainPanel(width = 12,
                           tabsetPanel(
                             tabPanel('Data view',
@@ -61,7 +61,7 @@ shinyUI(fluidPage(
                                                             
                                                           ))      
                                        ))),           
-                            tabPanel('T-Test',
+                            tabPanel('t-Test',
                                      fluidPage(
                                        
                                          sidebarLayout(

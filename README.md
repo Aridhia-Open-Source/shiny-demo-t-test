@@ -9,7 +9,7 @@ We can also use a t-test to compare the mean of a group against a known value, t
 
 Has three tabs:
 1. Data View, where you can select the data and see a summary of it
-2. T-test, here you can perform the t-test
+2. t-test, here you can perform the t-test
 3. Help, gives an overview of the app and how to use it
 
 ### Checkout and run
