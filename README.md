@@ -17,7 +17,7 @@ Has three tabs:
 You can clone this repository by using the command:
 
 ```
-git clone https://github.com/aridhia/demo-t-test
+git clone https://github.com/Aridhia-Open-Source/shiny-demo-t-test
 ```
 
 Open the .Rproj file in RStudio, source the script `dependencies.R` to install all the packages required by the app, and run `runApp()` to start the app.
