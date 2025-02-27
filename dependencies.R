@@ -11,3 +11,5 @@ package_install <- function(x, ...) {
 # Source this script to install all the libraries needed for the app
 
 packages <- c("shiny", "DT", "ggplot2")
+
+package_install(packages)
